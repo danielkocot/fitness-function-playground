@@ -1,0 +1,28 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v1
+      with:
+        java-version: '21'
+
+    - name: Build with Gradle
+      run: ./gradlew build
+
+    - name: Run Unit and ArchUnit Tests
+      run: ./gradlew test
+
+    - name: Set up k6
+      uses: grafana/setup-k6@v1
+
+    - name: Run Load Test
+      run: k6 run load-test.js
