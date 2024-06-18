@@ -22,7 +22,6 @@ jobs:
       run: ./gradlew test
 
     - name: Set up k6
-      uses: grafana/setup-k6@v1
-
-    - name: Run Load Test
-      run: k6 run load-test.js
+      uses: k6io/action@v0.1
+      with:
+        filename: k6/load_test.js
